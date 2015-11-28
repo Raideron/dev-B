@@ -40,16 +40,32 @@ namespace EntryPoint
         private static IEnumerable<Vector2> SortSpecialBuildingsByDistance(Vector2 house, IEnumerable<Vector2> specialBuildings)
         {
             //return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
-        }
-
-        private static IEnumerable<> MergeSort()
-        {
-
+            int length = specialBuildings.Count();
+            MergeSort(specialBuildings, 0, length - 1);
         }
 
         private static float CalculateDistance(Vector2 house, Vector2 specialBuilding)
         {
-            return (float) Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
+            return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
+        }
+
+        private static void MergeSort(IEnumerable<Vector2> UnsortedArray, int left, int right)
+        {
+            int mid;
+
+            if (right > left)
+            {
+                mid = (right + left) / 2;
+                MergeSort(UnsortedArray, left, mid);
+                MergeSort(UnsortedArray, mid + 1, right);
+
+                Merge(UnsortedArray, left, mid + 1, right);
+            }
+        }
+
+        private static void Merge(IEnumerable<Vector2> UnsortedArray, int left, int mid, int right)
+        {
+
         }
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
