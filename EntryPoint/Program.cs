@@ -40,31 +40,62 @@ namespace EntryPoint
         private static IEnumerable<Vector2> SortSpecialBuildingsByDistance(Vector2 house, IEnumerable<Vector2> specialBuildings)
         {
             //return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
+
             int length = specialBuildings.Count();
-            MergeSort(specialBuildings, 0, length - 1);
+            Vector2[] unorderedArray = specialBuildings.ToArray();
+
+            MergeSort(unorderedArray, 0, length - 1, house);
+            return unorderedArray;
         }
 
-        private static float CalculateDistance(Vector2 house, Vector2 specialBuilding)
+        private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
         {
             return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
 
-        private static void MergeSort(IEnumerable<Vector2> UnsortedArray, int left, int right)
+        private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
 
             if (right > left)
             {
                 mid = (right + left) / 2;
-                MergeSort(UnsortedArray, left, mid);
-                MergeSort(UnsortedArray, mid + 1, right);
+                MergeSort(UnsortedArray, left, mid, house);
+                MergeSort(UnsortedArray, mid + 1, right, house);
 
-                Merge(UnsortedArray, left, mid + 1, right);
+                Merge(UnsortedArray, left, mid + 1, right, house);
             }
         }
 
-        private static void Merge(IEnumerable<Vector2> UnsortedArray, int left, int mid, int right)
+        private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
         {
+            Vector2[] tempArray = new Vector2[UnsortedArray.Count()];
+            int numElements;
+            int tempPosition;
+
+            tempPosition = left;
+            numElements = right - left + 1;
+
+            while (left <= mid - 1 && mid <= right)
+            {
+                if (DistanceBetween(house, UnsortedArray[left]) <= DistanceBetween(house, UnsortedArray[mid]))
+                    tempArray[tempPosition++] = UnsortedArray[left++];
+                else
+                    tempArray[tempPosition++] = UnsortedArray[mid++];
+            }
+
+            while (left <= mid - 1)
+                tempArray[tempPosition++] = UnsortedArray[left++];
+
+            while (mid <= right)
+                tempArray[tempPosition++] = UnsortedArray[mid++];
+
+            for (int i = 0; i < numElements; i++)
+            {
+                UnsortedArray[right] = tempArray[right];
+                right--;
+            }
+
 
         }
 
