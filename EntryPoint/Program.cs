@@ -49,10 +49,7 @@ namespace EntryPoint
 
         private static float CalculateDistance(Vector2 house, Vector2 specialBuilding)
         {
-            double xDifference = Math.Abs(house.X-specialBuilding.X);
-            double yDifference = Math.Abs(house.Y-specialBuilding.Y);
-            double result = Math.Sqrt(Math.Pow(xDifference, 2) + Math.Pow(yDifference, 2));
-            return (float) result;
+            return (float) Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
