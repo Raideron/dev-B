@@ -74,3 +74,6 @@ E:\Users\Alex\Downloads\INFDEV02-6A - Practical assignment\EntryPoint\bin\Window
 E:\Users\Alex\Downloads\INFDEV02-6A - Practical assignment\EntryPoint\bin\Windows\Debug\SharpDX.RawInput.xml
 E:\Users\Alex\Downloads\INFDEV02-6A - Practical assignment\EntryPoint\bin\Windows\Debug\SharpDX.Direct3D9.xml
 E:\Users\Alex\Downloads\INFDEV02-6A - Practical assignment\EntryPoint\obj\x86\Debug\EntryPoint.csprojResolveAssemblyReference.cache
+D:\Users\Alex\Documents\dev-B\EntryPoint\bin\Windows\Debug\EntryPoint.exe.config
+D:\Users\Alex\Documents\dev-B\EntryPoint\obj\x86\Debug\EntryPoint.exe
+D:\Users\Alex\Documents\dev-B\EntryPoint\obj\x86\Debug\EntryPoint.pdb
