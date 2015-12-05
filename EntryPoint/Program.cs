@@ -43,20 +43,16 @@ namespace EntryPoint
 
             int length = specialBuildings.Count();
             Vector2[] unorderedArray = specialBuildings.ToArray();
-            Vector2[] orderedArray = new Vector2[unorderedArray.Count()];
+            Vector2[] orderedArray = null;
 
-            MergeSort(unorderedArray, 0, length - 1, house);
+            orderedArray = MergeSort(unorderedArray, 0, length - 1, house);
             return orderedArray;
         }
 
-        private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
-        {
-            return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
-        }
-
-        private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
+        private static Vector2[] MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
+            Vector2[] tempArray = null;
 
             if (left < right)
             {
@@ -64,11 +60,12 @@ namespace EntryPoint
                 MergeSort(UnsortedArray, left, mid, house);
                 MergeSort(UnsortedArray, mid + 1, right, house);
 
-                Merge(UnsortedArray, left, mid, right, house);
+                tempArray = Merge(UnsortedArray, left, mid, right, house);
             }
+            return tempArray;
         }
 
-        private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
+        private static Vector2[] Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
         {
             Vector2[] tempArray = new Vector2[right - left + 1];
             int tempPosition = 0;
@@ -92,8 +89,12 @@ namespace EntryPoint
                 }
             }
 
-            if (tempArray.Count() == UnsortedArray.Count())
-                UnsortedArray = tempArray;
+            return tempArray;
+        }
+
+        private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
+        {
+            return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
