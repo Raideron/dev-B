@@ -111,3 +111,4 @@ D:\Users\Alex\Documents\dev-B\EntryPoint\bin\Windows\Debug\SharpDX.Direct2D1.xml
 D:\Users\Alex\Documents\dev-B\EntryPoint\bin\Windows\Debug\SharpDX.XInput.xml
 D:\Users\Alex\Documents\dev-B\EntryPoint\bin\Windows\Debug\SharpDX.RawInput.xml
 D:\Users\Alex\Documents\dev-B\EntryPoint\bin\Windows\Debug\SharpDX.Direct3D9.xml
+D:\Users\Alex\Documents\dev-B\EntryPoint\obj\x86\Debug\EntryPoint.csprojResolveAssemblyReference.cache

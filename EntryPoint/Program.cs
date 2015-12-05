@@ -44,7 +44,7 @@ namespace EntryPoint
             int length = specialBuildings.Count();
             Vector2[] unorderedArray = specialBuildings.ToArray();
 
-            MergeSort(unorderedArray, 0, length - 1, house);
+            Split(unorderedArray, 0, length - 1, house);
             return unorderedArray;
         }
 
@@ -53,21 +53,21 @@ namespace EntryPoint
             return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
 
-        private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
+        private static void Split(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
 
             if (right > left)
             {
                 mid = (right + left) / 2;
-                MergeSort(UnsortedArray, left, mid, house);
-                MergeSort(UnsortedArray, mid + 1, right, house);
+                Split(UnsortedArray, left, mid, house);
+                Split(UnsortedArray, mid + 1, right, house);
 
-                Merge(UnsortedArray, left, mid + 1, right, house);
+                SortAndMerge(UnsortedArray, left, mid + 1, right, house);
             }
         }
 
-        private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
+        private static void SortAndMerge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
         {
             Vector2[] tempArray = new Vector2[UnsortedArray.Count()];
             int numElements;
@@ -95,8 +95,6 @@ namespace EntryPoint
                 UnsortedArray[right] = tempArray[right];
                 right--;
             }
-
-
         }
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
