@@ -45,11 +45,12 @@ namespace EntryPoint
             Vector2[] unorderedArray = specialBuildings.ToArray();
             Vector2[] orderedArray = null;
 
-            orderedArray = MergeSort(unorderedArray, 0, length - 1, house);
-            return orderedArray;
+            /*orderedArray = */
+            MergeSort(unorderedArray, 0, length - 1, house);
+            return unorderedArray;
         }
 
-        private static Vector2[] MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
+        private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
             Vector2[] tempArray = null;
@@ -60,16 +61,17 @@ namespace EntryPoint
                 MergeSort(UnsortedArray, left, mid, house);
                 MergeSort(UnsortedArray, mid + 1, right, house);
 
-                tempArray = Merge(UnsortedArray, left, mid, right, house);
+                Merge(UnsortedArray, left, mid, right, house);
             }
-            return tempArray;
+            //return tempArray;
         }
 
-        private static Vector2[] Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
+        private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
         {
             Vector2[] tempArray = new Vector2[right - left + 1];
             int tempPosition = 0;
             int startOfRightSide = mid + 1;
+            int initialLeft = left;
 
             while (tempPosition < tempArray.Count())
             {
@@ -79,17 +81,33 @@ namespace EntryPoint
                     tempPosition++;
                     if (left < mid)
                         left++;
+                    else
+                        for (int s = startOfRightSide; s <= mid; s++)
+                        {
+                            tempArray[tempPosition] = UnsortedArray[s];
+                            tempPosition++;
+                        }
                 }
                 else
                 {
                     tempArray[tempPosition] = UnsortedArray[startOfRightSide];
                     tempPosition++;
                     if (startOfRightSide < right)
-                        startOfRightSide++;
+                        startOfRightSide++; // hier is probleem, blijft start of right checken
+                    else
+                        for (int l = left; l <= mid; l++)
+                        {
+                            tempArray[tempPosition] = UnsortedArray[l];
+                            tempPosition++;
+                        }
                 }
             }
 
-            return tempArray;
+            for (int i = 0; i < tempArray.Count(); i++)
+            {
+                UnsortedArray[initialLeft] = tempArray[i];
+                initialLeft++;
+            }
         }
 
         private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
