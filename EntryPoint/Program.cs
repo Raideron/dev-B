@@ -43,9 +43,10 @@ namespace EntryPoint
 
             int length = specialBuildings.Count();
             Vector2[] unorderedArray = specialBuildings.ToArray();
+            Vector2[] orderedArray = new Vector2[unorderedArray.Count()];
 
-            Split(unorderedArray, 0, length - 1, house);
-            return unorderedArray;
+            MergeSort(unorderedArray, 0, length - 1, house);
+            return orderedArray;
         }
 
         private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
@@ -53,48 +54,46 @@ namespace EntryPoint
             return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
 
-        private static void Split(Vector2[] UnsortedArray, int left, int right, Vector2 house)
+        private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
 
-            if (right > left)
+            if (left < right)
             {
                 mid = (right + left) / 2;
-                Split(UnsortedArray, left, mid, house);
-                Split(UnsortedArray, mid + 1, right, house);
+                MergeSort(UnsortedArray, left, mid, house);
+                MergeSort(UnsortedArray, mid + 1, right, house);
 
-                SortAndMerge(UnsortedArray, left, mid + 1, right, house);
+                Merge(UnsortedArray, left, mid, right, house);
             }
         }
 
-        private static void SortAndMerge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
+        private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
         {
-            Vector2[] tempArray = new Vector2[UnsortedArray.Count()];
-            int numElements;
-            int tempPosition;
+            Vector2[] tempArray = new Vector2[right - left + 1];
+            int tempPosition = 0;
+            int startOfRightSide = mid + 1;
 
-            tempPosition = left;
-            numElements = right - left + 1;
-
-            while (left <= mid - 1 && mid <= right)
+            while (tempPosition < tempArray.Count())
             {
-                if (DistanceBetween(house, UnsortedArray[left]) <= DistanceBetween(house, UnsortedArray[mid]))
-                    tempArray[tempPosition++] = UnsortedArray[left++];
+                if (DistanceBetween(house, UnsortedArray[left]) < DistanceBetween(house, UnsortedArray[startOfRightSide]))
+                {
+                    tempArray[tempPosition] = UnsortedArray[left];
+                    tempPosition++;
+                    if (left < mid)
+                        left++;
+                }
                 else
-                    tempArray[tempPosition++] = UnsortedArray[mid++];
+                {
+                    tempArray[tempPosition] = UnsortedArray[startOfRightSide];
+                    tempPosition++;
+                    if (startOfRightSide < right)
+                        startOfRightSide++;
+                }
             }
 
-            while (left <= mid - 1)
-                tempArray[tempPosition++] = UnsortedArray[left++];
-
-            while (mid <= right)
-                tempArray[tempPosition++] = UnsortedArray[mid++];
-
-            for (int i = 0; i < numElements; i++)
-            {
-                UnsortedArray[right] = tempArray[right];
-                right--;
-            }
+            if (tempArray.Count() == UnsortedArray.Count())
+                UnsortedArray = tempArray;
         }
 
         private static IEnumerable<IEnumerable<Vector2>> FindSpecialBuildingsWithinDistanceFromHouse(
