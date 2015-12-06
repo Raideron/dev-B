@@ -39,15 +39,12 @@ namespace EntryPoint
 
         private static IEnumerable<Vector2> SortSpecialBuildingsByDistance(Vector2 house, IEnumerable<Vector2> specialBuildings)
         {
-            //return specialBuildings.OrderBy(v => Vector2.Distance(v, house));
-
             int length = specialBuildings.Count();
-            Vector2[] unorderedArray = specialBuildings.ToArray();
+            Vector2[] specialBuildingsArray = specialBuildings.ToArray();
 
-            /*orderedArray = */
-            MergeSort(unorderedArray, 0, length - 1, house);
-            return (IEnumerable<Vector2>) unorderedArray;
-            // returning unordered array?
+            MergeSort(specialBuildingsArray, 0, length - 1, house);
+
+            return (IEnumerable<Vector2>) specialBuildingsArray;
         }
 
         private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
@@ -62,7 +59,6 @@ namespace EntryPoint
 
                 Merge(UnsortedArray, left, mid, right, house);
             }
-            //return tempArray;
         }
 
         private static void Merge(Vector2[] UnsortedArray, int left, int mid, int right, Vector2 house)
