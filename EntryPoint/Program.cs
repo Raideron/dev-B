@@ -43,17 +43,16 @@ namespace EntryPoint
 
             int length = specialBuildings.Count();
             Vector2[] unorderedArray = specialBuildings.ToArray();
-            Vector2[] orderedArray = null;
 
             /*orderedArray = */
             MergeSort(unorderedArray, 0, length - 1, house);
-            return unorderedArray;
+            return (IEnumerable<Vector2>) unorderedArray;
+            // returning unordered array?
         }
 
         private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
         {
             int mid;
-            Vector2[] tempArray = null;
 
             if (left < right)
             {
@@ -82,7 +81,7 @@ namespace EntryPoint
                     if (left < mid)
                         left++;
                     else
-                        for (int s = startOfRightSide; s <= mid; s++)
+                        for (int s = startOfRightSide; s <= right; s++)
                         {
                             tempArray[tempPosition] = UnsortedArray[s];
                             tempPosition++;
@@ -93,7 +92,7 @@ namespace EntryPoint
                     tempArray[tempPosition] = UnsortedArray[startOfRightSide];
                     tempPosition++;
                     if (startOfRightSide < right)
-                        startOfRightSide++; // hier is probleem, blijft start of right checken
+                        startOfRightSide++;
                     else
                         for (int l = left; l <= mid; l++)
                         {
