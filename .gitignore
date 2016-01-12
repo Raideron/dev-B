@@ -1,1 +1,5 @@
 .vs/
+EntryPoint/Content/obj/Windows/.mgcontent
+EntryPoint/Content/obj/Windows/numberingFont.mgcontent
+EntryPoint/obj/x86/Debug/EntryPoint.csproj.FileListAbsolute.txt
+Main/obj/Debug/Game.fsproj.FileListAbsolute.txt
