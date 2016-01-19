@@ -118,23 +118,20 @@ namespace EntryPoint
 
             //insert special buidlings into the tree
             Tree tree = new Tree();
-            int level = 1;
             foreach (Vector2 building in specialBuildings)
             {
                 Node buildingNode = new Node(building);
-                tree.insert(null, buildingNode, level);
-                level++;
+                tree.insert(tree.root, buildingNode, 1);
             }
 
 
             foreach (Tuple<Vector2, float> housePair in housesAndDistances)
             {
                 //make a rectangular selection of specialbuidings in range
-                IEnumerable<IEnumerable<Vector2>> roughSelection;
                 double x = housePair.Item1.X;
                 double y = housePair.Item1.Y;
                 double range = housePair.Item2;
-                List<Vector2> Roughlist = tree.findRange(x - range, x + range, y - range, y + range, 0);
+                List<Vector2> Roughlist = tree.findRange(x - range, x + range, y - range, y + range, 1, null);
 
                 //refine rough selection to exact distance
                 List<Vector2> fineList = new List<Vector2>();

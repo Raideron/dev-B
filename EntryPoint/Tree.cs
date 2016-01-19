@@ -9,8 +9,8 @@ namespace EntryPoint
 {
     class Tree
     {
-        public List<Node> tree = new List<Node>();
-        public int rootIndex;
+        //public List<Node> tree = new List<Node>();
+        public Node root = null;
 
         /// <summary>
         /// Returns a list of vectors within the specified range
@@ -27,27 +27,21 @@ namespace EntryPoint
             List<Vector2> returnValue = new List<Vector2>();
             if (root == null)
             {
-                root = tree[0];
+                root = this.root;
             }
 
             double xOrYRoot;
-            double xOrYLeftChild;
-            double xOrYRightChild;
             double xOrYMin;
             double xOrYMax;
             if (level % 2 != 0)
             {
                 xOrYRoot = root.building.X;
-                xOrYLeftChild = root.left.building.X;
-                xOrYRightChild = root.right.building.X;
                 xOrYMin = xMin;
                 xOrYMax = xMax;
             }
             else
             {
                 xOrYRoot = root.building.Y;
-                xOrYLeftChild = root.left.building.Y;
-                xOrYRightChild = root.right.building.Y;
                 xOrYMin = yMin;
                 xOrYMax = yMax;
             }
@@ -55,85 +49,82 @@ namespace EntryPoint
             if (xOrYRoot >= xOrYMin && xOrYRoot <= xOrYMax)
             {
                 returnValue.Add(root.building);
-
-                if (root.left != null)
-                {
-                    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
-                }
-                if (root.right != null)
-                {
-                    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
-                }
             }
-
-
+            if (root.left != null)
+            {
+                returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
+            }
+            if (root.right != null)
+            {
+                returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
+            }
 
             return returnValue;
         }
 
         public void insert(Node root, Node newBuilding, int level)
         {
-            //Node newNode = new Node(building);
-            //tree.Add(newNode);
-            if (tree.Count == 0)
+            if (this.root == null)
             {
-                tree.Add(newBuilding);
+                this.root = newBuilding;
                 return;
             }
             if (root == null)
             {
-                root = tree.ElementAt(0);
+                root = newBuilding;
+                return;
             }
 
+            double xOrYRoot;
+            double xOrYNew;
             if (level % 2 != 0)
             {
-                if (newBuilding.building.X < root.building.X)
+                xOrYRoot = root.building.X;
+                xOrYNew = newBuilding.building.X;
+            }
+            else
+            {
+                xOrYRoot = root.building.Y;
+                xOrYNew = newBuilding.building.Y;
+            }
+
+            if (xOrYNew < xOrYRoot)
+            {
+                if (root.left == null)
                 {
-                    if (canInsert(root.left, newBuilding, level))
-                    {
-                        return;
-                    }
+                    root.left = newBuilding;
                 }
                 else
                 {
-                    if (canInsert(root.right, newBuilding, level))
-                    {
-                        return;
-                    }
+                    insert(root.left, newBuilding, level++);
                 }
             }
             else
             {
-                if (newBuilding.building.Y < root.building.Y)
+                if (root.right == null)
                 {
-                    if (canInsert(root.left, newBuilding, level))
-                    {
-                        return;
-                    }
+                    root.right = newBuilding;
                 }
                 else
                 {
-                    if (canInsert(root.right, newBuilding, level))
-                    {
-                        return;
-                    }
+                    insert(root.right, newBuilding, level++);
                 }
             }
-
         }
 
-        private bool canInsert(Node child, Node newNode, int level)
-        {
-            if (child == null)
-            {
-                child = newNode;
-                return true;
-            }
-            else
-            {
-                insert(child, newNode, level++);
-                return false;
-            }
-        }
+
+        //private bool canInsert(Node child, Node newNode, int level)
+        //{
+        //    if (child == null)
+        //    {
+        //        child = newNode;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        insert(child, newNode, level++);
+        //        return false;
+        //    }
+        //}
     }
 }
