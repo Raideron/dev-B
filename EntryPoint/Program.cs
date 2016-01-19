@@ -44,7 +44,7 @@ namespace EntryPoint
 
             MergeSort(specialBuildingsArray, 0, length - 1, house);
 
-            return (IEnumerable<Vector2>) specialBuildingsArray;
+            return (IEnumerable<Vector2>)specialBuildingsArray;
         }
 
         private static void MergeSort(Vector2[] UnsortedArray, int left, int right, Vector2 house)
@@ -114,22 +114,42 @@ namespace EntryPoint
           IEnumerable<Vector2> specialBuildings,
           IEnumerable<Tuple<Vector2, float>> housesAndDistances)
         {
-            //return
-            //    from h in housesAndDistances
-            //    select
-            //      from s in specialBuildings
-            //      where Vector2.Distance(h.Item1, s) <= h.Item2
-            //      select s;
+            List<List<Vector2>> returnValue = new List<List<Vector2>>();
+
+            //insert special buidlings into the tree
             Tree tree = new Tree();
             int level = 1;
-            foreach(Vector2 building in specialBuildings)
+            foreach (Vector2 building in specialBuildings)
             {
                 Node buildingNode = new Node(building);
                 tree.insert(null, buildingNode, level);
                 level++;
             }
 
-            return null;
+
+            foreach (Tuple<Vector2, float> housePair in housesAndDistances)
+            {
+                //make a rectangular selection of specialbuidings in range
+                IEnumerable<IEnumerable<Vector2>> roughSelection;
+                double x = housePair.Item1.X;
+                double y = housePair.Item1.Y;
+                double range = housePair.Item2;
+                List<Vector2> Roughlist = tree.findRange(x - range, x + range, y - range, y + range, 0);
+
+                //refine rough selection to exact distance
+                List<Vector2> fineList = new List<Vector2>();
+                foreach (Vector2 specialBuidling in Roughlist)
+                {
+                    if (range >= DistanceBetween(housePair.Item1, specialBuidling))
+                    {
+                        fineList.Add(specialBuidling);
+                    }
+                    returnValue.Add(fineList);
+                }
+            }
+
+
+            return returnValue;
         }
 
         private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding,
