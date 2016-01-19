@@ -46,22 +46,40 @@ namespace EntryPoint
                 xOrYMax = yMax;
             }
 
-            if (xOrYRoot >= xOrYMin && xOrYRoot <= xOrYMax)
+            if (xOrYMin <= xOrYRoot && xOrYRoot <= xOrYMax)
             {
                 returnValue.Add(root.building);
+                if (root.left != null)
+                {
+                    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
+                }
+                if (root.right != null)
+                {
+                    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
+                }
             }
-            if (root.left != null)
-            {
-                returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
-            }
-            if (root.right != null)
+            else if (xOrYRoot < xOrYMin && root.right != null)
             {
                 returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
             }
+            else if (xOrYMax < xOrYRoot && root.left != null)
+            {
+                returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
+            }
+
+            //if (root.left != null)
+            //{
+            //    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
+            //}
+            //if (root.right != null)
+            //{
+            //    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
+            //}
 
             return returnValue;
         }
 
+        //TODO set root of node
         public void insert(Node root, Node newBuilding, int level)
         {
             if (this.root == null)
