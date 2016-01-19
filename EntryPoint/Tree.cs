@@ -67,19 +67,15 @@ namespace EntryPoint
                 returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
             }
 
-            //if (root.left != null)
-            //{
-            //    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.left));
-            //}
-            //if (root.right != null)
-            //{
-            //    returnValue.AddRange(findRange(xMin, xMax, yMin, yMax, level++, root.right));
-            //}
-
             return returnValue;
         }
 
-        //TODO set root of node
+        /// <summary>
+        /// inserts a new node into the tree
+        /// </summary>
+        /// <param name="root">should be null when calling</param>
+        /// <param name="newBuilding"></param>
+        /// <param name="level">should be one when calling</param>
         public void insert(Node root, Node newBuilding, int level)
         {
             if (this.root == null)
@@ -128,21 +124,7 @@ namespace EntryPoint
                     insert(root.right, newBuilding, level++);
                 }
             }
+            newBuilding.root = root;
         }
-
-
-        //private bool canInsert(Node child, Node newNode, int level)
-        //{
-        //    if (child == null)
-        //    {
-        //        child = newNode;
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        insert(child, newNode, level++);
-        //        return false;
-        //    }
-        //}
     }
 }
