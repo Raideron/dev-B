@@ -12,6 +12,14 @@ namespace EntryPoint
         public Vector2 Location { get; set; }
         public double TotalDistanceFromStart { get; set; }
         public bool Visited { get; set; }
-        public List<Vertex> ConnectedVerteces { get; set; }
+        public List<Vertex> ConnectedVertices { get; set; }
+
+        public Vertex(Vector2 v)
+        {
+            Location = v;
+            TotalDistanceFromStart = Double.MaxValue;
+            Visited = false;
+            ConnectedVertices = new List<Vertex>();
+        }
     }
 }

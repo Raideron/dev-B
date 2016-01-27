@@ -105,7 +105,7 @@ namespace EntryPoint
             }
         }
 
-        private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
+        public static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
         {
             return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
