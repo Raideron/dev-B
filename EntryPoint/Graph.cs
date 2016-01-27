@@ -18,28 +18,36 @@ namespace EntryPoint
             Edges = new List<Edge>();
         }
 
-        public void addUniqueVertex(Vertex v)
+        public Vertex addUniqueVertex(Vertex v)
         {
-            if(!Vertices.Contains(v))
+            Vertex foundVertex = Vertices.Find(x => x.Location == v.Location);
+            if (foundVertex == null)
             {
                 Vertices.Add(v);
+                return v;
             }
+            else
+            {
+                return foundVertex;
+            }
+
         }
-        
+
         public void addRoads(IEnumerable<Tuple<Vector2, Vector2>> roads)
         {
-            foreach(Tuple<Vector2, Vector2> road in roads)
+            foreach (Tuple<Vector2, Vector2> road in roads)
             {
                 Vertex vertex1 = new Vertex(road.Item1);
                 Vertex vertex2 = new Vertex(road.Item2);
                 Edge edge = new Edge(vertex1, vertex2);
 
-                addUniqueVertex(vertex1);
-                addUniqueVertex(vertex2);
+                vertex1 = addUniqueVertex(vertex1);
+                vertex2 = addUniqueVertex(vertex2);
                 Edges.Add(edge);
+
+                vertex1.ConnectedVertices.Add(vertex1);
+                vertex2.ConnectedVertices.Add(vertex2);
             }
         }
-
-        //TODO find connected vertices
     }
 }
