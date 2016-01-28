@@ -19,5 +19,10 @@ namespace EntryPoint
             Vertex2 = v2;
             weight = Program.DistanceBetween(v1.Location, v2.Location);
         }
+
+        public Tuple<Vector2, Vector2> ToRoad()
+        {
+            return new Tuple<Vector2, Vector2>(Vertex1.Location, Vertex2.Location);
+        }
     }
 }

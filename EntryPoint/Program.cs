@@ -164,7 +164,11 @@ namespace EntryPoint
 
             IEnumerable<Tuple<Vector2, Vector2>> returnValue;
 
+            Graph graph = new Graph();
+            graph.AddRoads(roads);
 
+            returnValue = graph.FindRoute(startingBuilding, destinationBuilding);
+            return returnValue;
         }
 
         private static IEnumerable<IEnumerable<Tuple<Vector2, Vector2>>> FindRoutesToAll(Vector2 startingBuilding,

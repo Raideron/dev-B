@@ -10,16 +10,19 @@ namespace EntryPoint
     class Vertex
     {
         public Vector2 Location { get; set; }
-        public double TotalDistanceFromStart { get; set; }
         public bool Visited { get; set; }
-        public List<Vertex> ConnectedVertices { get; set; }
+        public List<Edge> ConnectedEdges { get; set; }
+        public Route Route { get; set; }
 
-        public Vertex(Vector2 v)
+        public Vertex(Vector2 v, Route route)
         {
             Location = v;
-            TotalDistanceFromStart = Double.MaxValue;
             Visited = false;
-            ConnectedVertices = new List<Vertex>();
+            ConnectedEdges = new List<Edge>();
+            if (route != null)
+                Route = route;
+            else
+                Route = new Route(Double.MaxValue, null);
         }
     }
 }
