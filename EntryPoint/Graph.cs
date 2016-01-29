@@ -11,9 +11,6 @@ namespace EntryPoint
     {
         public List<Vertex> Vertices { get; set; }
         public List<Edge> Edges { get; set; }
-        //TODO remove these two below
-        private int counter = 0;
-        //List<Edge> possibleRoutes = new List<Edge>();
 
         public Graph()
         {
@@ -41,12 +38,9 @@ namespace EntryPoint
 
         private void visitNextVertex(Vertex currentVertex)
         {
-            int localCounter = 0;
             currentVertex.Visited = true;
             foreach (Edge edge in currentVertex.ConnectedEdges)
             {
-                localCounter++;
-                counter++;
                 Vertex nextVertex = null;
                 if (edge.Vertex1.Equals(currentVertex))
                     nextVertex = edge.Vertex2;

@@ -152,16 +152,6 @@ namespace EntryPoint
         private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding,
           Vector2 destinationBuilding, IEnumerable<Tuple<Vector2, Vector2>> roads)
         {
-            //var startingRoad = roads.Where(x => x.Item1.Equals(startingBuilding)).First();
-            //List<Tuple<Vector2, Vector2>> fakeBestPath = new List<Tuple<Vector2, Vector2>>() { startingRoad };
-            //var prevRoad = startingRoad;
-            //for (int i = 0; i < 30; i++)
-            //{
-            //    prevRoad = (roads.Where(x => x.Item1.Equals(prevRoad.Item2)).OrderBy(x => Vector2.Distance(x.Item2, destinationBuilding)).First());
-            //    fakeBestPath.Add(prevRoad);
-            //}
-            //return fakeBestPath;
-
             IEnumerable<Tuple<Vector2, Vector2>> returnValue;
 
             Graph graph = new Graph();
