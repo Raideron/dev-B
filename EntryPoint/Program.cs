@@ -105,7 +105,7 @@ namespace EntryPoint
             }
         }
 
-        private static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
+        public static float DistanceBetween(Vector2 house, Vector2 specialBuilding)
         {
             return (float)Math.Sqrt(Math.Pow(house.X - specialBuilding.X, 2) + Math.Pow(house.Y - specialBuilding.Y, 2));
         }
@@ -120,7 +120,7 @@ namespace EntryPoint
             Tree tree = new Tree();
             foreach (Vector2 building in specialBuildings)
             {
-                Node buildingNode = new Node(building);
+                TreeNode buildingNode = new TreeNode(building);
                 tree.insert(tree.root, buildingNode, 1);
             }
 
@@ -152,15 +152,13 @@ namespace EntryPoint
         private static IEnumerable<Tuple<Vector2, Vector2>> FindRoute(Vector2 startingBuilding,
           Vector2 destinationBuilding, IEnumerable<Tuple<Vector2, Vector2>> roads)
         {
-            var startingRoad = roads.Where(x => x.Item1.Equals(startingBuilding)).First();
-            List<Tuple<Vector2, Vector2>> fakeBestPath = new List<Tuple<Vector2, Vector2>>() { startingRoad };
-            var prevRoad = startingRoad;
-            for (int i = 0; i < 30; i++)
-            {
-                prevRoad = (roads.Where(x => x.Item1.Equals(prevRoad.Item2)).OrderBy(x => Vector2.Distance(x.Item2, destinationBuilding)).First());
-                fakeBestPath.Add(prevRoad);
-            }
-            return fakeBestPath;
+            IEnumerable<Tuple<Vector2, Vector2>> returnValue;
+
+            Graph graph = new Graph();
+            graph.AddRoads(roads);
+
+            returnValue = graph.FindRoute(startingBuilding, destinationBuilding);
+            return returnValue;
         }
 
         private static IEnumerable<IEnumerable<Tuple<Vector2, Vector2>>> FindRoutesToAll(Vector2 startingBuilding,

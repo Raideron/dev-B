@@ -10,7 +10,7 @@ namespace EntryPoint
     class Tree
     {
         //public List<Node> tree = new List<Node>();
-        public Node root = null;
+        public TreeNode root = null;
 
         /// <summary>
         /// Returns a list of vectors within the specified range
@@ -22,7 +22,7 @@ namespace EntryPoint
         /// <param name="level">depth of the tree, when calling this value is ussually 1</param>
         /// <param name="root">can be left null for the root of the tree</param>
         /// <returns></returns>
-        public List<Vector2> findRange(double xMin, double xMax, double yMin, double yMax, int level, Node root)
+        public List<Vector2> findRange(double xMin, double xMax, double yMin, double yMax, int level, TreeNode root)
         {
             List<Vector2> returnValue = new List<Vector2>();
             if (root == null)
@@ -76,7 +76,7 @@ namespace EntryPoint
         /// <param name="root">should be null when calling</param>
         /// <param name="newBuilding"></param>
         /// <param name="level">should be one when calling</param>
-        public void insert(Node root, Node newBuilding, int level)
+        public void insert(TreeNode root, TreeNode newBuilding, int level)
         {
             if (this.root == null)
             {

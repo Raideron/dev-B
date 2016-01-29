@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace EntryPoint
 {
-    class Node
+    class TreeNode
     {
         public Vector2 building { get; set; }
         //public int level { get; set; }
-        public Node root { get; set; }
-        public Node left { get; set; }
-        public Node right { get; set; }
+        public TreeNode root { get; set; }
+        public TreeNode left { get; set; }
+        public TreeNode right { get; set; }
 
-        public Node(Vector2 newBuilding)
+        public TreeNode(Vector2 newBuilding)
         {
             building = newBuilding;
         }
