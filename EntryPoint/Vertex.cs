@@ -27,8 +27,19 @@ namespace EntryPoint
 
         public void AddUniqueConnectedEdge(Edge e)
         {
-            if (!ConnectedEdges.Contains(e))
-                ConnectedEdges.Add(e);
+            foreach (Edge edge in ConnectedEdges)
+            {
+                Edge inverseEdge = e.getInverse();
+                if (edge.Vertex1.Location.Equals(e.Vertex1.Location) && edge.Vertex2.Location.Equals(e.Vertex2.Location))
+                {
+                    return;
+                }
+                else if (edge.Vertex1.Location.Equals(inverseEdge.Vertex1.Location) && edge.Vertex2.Location.Equals(inverseEdge.Vertex2.Location))
+                {
+                    return;
+                }
+            }
+            ConnectedEdges.Add(e);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace EntryPoint
         public List<Vertex> Vertices { get; set; }
         public List<Edge> Edges { get; set; }
         //TODO remove these two below
-        //private int counter = 0;
+        private int counter = 0;
         //List<Edge> possibleRoutes = new List<Edge>();
 
         public Graph()
@@ -41,10 +41,12 @@ namespace EntryPoint
 
         private void visitNextVertex(Vertex currentVertex)
         {
-            //counter++;
+            int localCounter = 0;
             currentVertex.Visited = true;
             foreach (Edge edge in currentVertex.ConnectedEdges)
             {
+                localCounter++;
+                counter++;
                 Vertex nextVertex = null;
                 if (edge.Vertex1.Equals(currentVertex))
                     nextVertex = edge.Vertex2;
@@ -52,18 +54,21 @@ namespace EntryPoint
                     nextVertex = edge.Vertex1;
 
                 double newDistance = currentVertex.Route.Distance + edge.weight;
-
-                if (newDistance < nextVertex.Route.Distance)
+                double oldDistance = nextVertex.Route.Distance;
+                
+                if (newDistance < oldDistance)
                 {
-                    Route newRoute = currentVertex.Route;
+                    Route newRoute = new Route(currentVertex.Route.Distance, currentVertex.Route.Edges);
                     newRoute.Edges.Add(edge);
                     newRoute.Distance = newDistance;
-                    //possibleRoutes.Add(edge);
                     nextVertex.Route = newRoute;
+                    nextVertex.Visited = false;
                 }
 
                 if (!nextVertex.Visited)
+                {
                     visitNextVertex(nextVertex);
+                }
             }
         }
 

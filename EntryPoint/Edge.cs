@@ -35,5 +35,12 @@ namespace EntryPoint
 
             return nextVertex;
         }
+
+        public Edge getInverse()
+        {
+            Edge e = new Edge(Vertex2, Vertex1);
+            e.weight = weight;
+            return e;
+        }
     }
 }
