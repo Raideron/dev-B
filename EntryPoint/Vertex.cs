@@ -24,5 +24,11 @@ namespace EntryPoint
             else
                 Route = new Route(Double.MaxValue, null);
         }
+
+        public void AddUniqueConnectedEdge(Edge e)
+        {
+            if (!ConnectedEdges.Contains(e))
+                ConnectedEdges.Add(e);
+        }
     }
 }

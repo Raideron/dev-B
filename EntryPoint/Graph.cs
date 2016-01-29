@@ -11,6 +11,9 @@ namespace EntryPoint
     {
         public List<Vertex> Vertices { get; set; }
         public List<Edge> Edges { get; set; }
+        //TODO remove these two below
+        //private int counter = 0;
+        //List<Edge> possibleRoutes = new List<Edge>();
 
         public Graph()
         {
@@ -23,8 +26,9 @@ namespace EntryPoint
             List<Tuple<Vector2, Vector2>> returnValue = new List<Tuple<Vector2, Vector2>>();
             Vertex startVertex = Vertices.Find(x => x.Location == startVector);
             Vertex endVertex = Vertices.Find(x => x.Location == endVector);
-            List<Route> possibleRoutes = new List<Route>();
 
+
+            startVertex.Route.Distance = 0;
             visitNextVertex(startVertex);
 
             foreach (Edge edge in endVertex.Route.Edges)
@@ -37,22 +41,24 @@ namespace EntryPoint
 
         private void visitNextVertex(Vertex currentVertex)
         {
+            //counter++;
             currentVertex.Visited = true;
             foreach (Edge edge in currentVertex.ConnectedEdges)
             {
-                Vertex nextVertex;
+                Vertex nextVertex = null;
                 if (edge.Vertex1.Equals(currentVertex))
                     nextVertex = edge.Vertex2;
-                else
+                else if (edge.Vertex2.Equals(currentVertex))
                     nextVertex = edge.Vertex1;
 
-                double compareDistance = currentVertex.Route.Distance + edge.weight;
+                double newDistance = currentVertex.Route.Distance + edge.weight;
 
-                if (compareDistance < nextVertex.Route.Distance)
+                if (newDistance < nextVertex.Route.Distance)
                 {
                     Route newRoute = currentVertex.Route;
-                    newRoute.Distance = compareDistance;
                     newRoute.Edges.Add(edge);
+                    newRoute.Distance = newDistance;
+                    //possibleRoutes.Add(edge);
                     nextVertex.Route = newRoute;
                 }
 
@@ -61,21 +67,23 @@ namespace EntryPoint
             }
         }
 
+
+
         public void AddRoads(IEnumerable<Tuple<Vector2, Vector2>> roads)
         {
             foreach (Tuple<Vector2, Vector2> road in roads)
             {
                 Vertex vertex1 = new Vertex(road.Item1, null);
                 Vertex vertex2 = new Vertex(road.Item2, null);
-                Edge edge = new Edge(vertex1, vertex2);
 
-                //TODO reduce complexity, no return needed
+
                 vertex1 = AddUniqueVertex(vertex1);
                 vertex2 = AddUniqueVertex(vertex2);
+                Edge edge = new Edge(vertex1, vertex2);
                 Edges.Add(edge);
 
-                vertex1.ConnectedEdges.Add(edge);
-                vertex2.ConnectedEdges.Add(edge);
+                vertex1.AddUniqueConnectedEdge(edge);
+                vertex2.AddUniqueConnectedEdge(edge);
             }
         }
 
@@ -91,7 +99,6 @@ namespace EntryPoint
             {
                 return foundVertex;
             }
-
         }
     }
 }

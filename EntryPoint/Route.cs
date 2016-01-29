@@ -8,7 +8,6 @@ namespace EntryPoint
 {
     class Route
     {
-        //TODO change distance variable to method which gets from edges
         public double Distance { get; set; }
         public List<Edge> Edges { get; set; }
 

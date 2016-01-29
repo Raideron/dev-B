@@ -24,5 +24,16 @@ namespace EntryPoint
         {
             return new Tuple<Vector2, Vector2>(Vertex1.Location, Vertex2.Location);
         }
+
+        public Vertex getOtherVertex(Vertex currentVertex)
+        {
+            Vertex nextVertex = null;
+            if (Vertex1.Equals(currentVertex))
+                nextVertex = Vertex2;
+            else if (Vertex2.Equals(currentVertex))
+                nextVertex = Vertex1;
+
+            return nextVertex;
+        }
     }
 }
